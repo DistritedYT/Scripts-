@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+klocal OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "DistritedHub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest", IntroText = "Welcome to DistritedHub!"})
 local Tab = Window:MakeTab({
 	Name = "Movesets",
@@ -56,7 +56,7 @@ Tab:AddButton({
 	Name = "Solar Guardian Moveset",
 	Callback = function()
       		print("button pressed")
-loadstring(game:HttpGet("https://pastebin.com/raw/mxH6PKJU", true))()
+loadstring(game:HttpGet("https://pastebin.com/raw/FjAjmWp5", true))()
   	end    
 })
 
