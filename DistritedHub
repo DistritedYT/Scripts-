@@ -2,7 +2,7 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 local Window = OrionLib:MakeWindow({Name = "DistritedHub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest", IntroText = "Welcome to DistritedHub!"})
 local Tab = Window:MakeTab({
 	Name = "Movesets",
-	Icon = "rbxassetid://18154629221",
+	Icon = "rbxassetid://18434673438",
 	PremiumOnly = false
 })
 local Section = Tab:AddSection({
@@ -11,7 +11,7 @@ local Section = Tab:AddSection({
 OrionLib:MakeNotification({
 	Name = "Thanks for using my Hub!",
 	Content = "This Script is very cool",
-	Image = "rbxassetid://4483345998",
+	Image = "rbxassetid://12285568530",
 	Time = 8
 })
 Tab:AddButton({
