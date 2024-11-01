@@ -56,7 +56,7 @@ Tab:AddButton({
 	Name = "Solar Guardian Moveset",
 	Callback = function()
       		print("button pressed")
-loadstring(game:HttpGet("https://pastebin.com/raw/FjAjmWp5", true))()
+loadstring(game:HttpGet("https://pastebin.com/raw/mxH6PKJU", true))()
   	end    
 })
 
