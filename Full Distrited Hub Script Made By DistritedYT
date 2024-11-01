@@ -1,0 +1,84 @@
+-- Create the watermark GUI (separate from the main invite popup)
+local player = game.Players.LocalPlayer
+local watermarkGui = Instance.new("ScreenGui")
+local watermark = Instance.new("TextLabel")
+
+-- Set up the watermark properties
+watermarkGui.Parent = player:WaitForChild("PlayerGui")
+watermarkGui.Name = "WatermarkGui"
+
+watermark.Parent = watermarkGui
+watermark.Size = UDim2.new(0.2, 0, 0.05, 0)  -- Adjust size as needed
+watermark.Position = UDim2.new(0.4, 0, 0, 0)  -- Position it at the top-center of the screen
+watermark.BackgroundTransparency = 1  -- No background
+watermark.Text = "Made By DistritedYT"
+watermark.Font = Enum.Font.SourceSansBold
+watermark.TextSize = 18
+watermark.TextColor3 = Color3.fromRGB(255, 255, 255)
+watermark.TextTransparency = 0.3  -- Set transparency level for a subtle effect
+watermark.TextStrokeTransparency = 0.8  -- Adds a slight outline for better visibility
+
+-- Create the invite popup GUI
+local gui = Instance.new("ScreenGui")
+local frame = Instance.new("Frame")
+local imageLabel = Instance.new("ImageLabel")
+local inviteText = Instance.new("TextLabel")
+local joinButton = Instance.new("TextButton")
+local declineButton = Instance.new("TextButton")
+
+-- Set up invite popup GUI properties
+gui.Parent = player:WaitForChild("PlayerGui")
+gui.Name = "InvitePopup"
+
+frame.Parent = gui
+frame.Size = UDim2.new(0.3, 0, 0.35, 0)  -- Increased height slightly to fit both buttons
+frame.Position = UDim2.new(0.35, 0, 0.35, 0)
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+frame.BackgroundTransparency = 0.3
+frame.BorderSizePixel = 0
+frame.ClipsDescendants = true
+
+imageLabel.Parent = frame
+imageLabel.Size = UDim2.new(0.3, 0, 0.3, 0)
+imageLabel.Position = UDim2.new(0.35, 0, 0.1, 0)
+imageLabel.BackgroundTransparency = 1
+imageLabel.Image = "rbxassetid://<YourImageAssetID>" -- Replace with the asset ID of the triangle icon
+
+inviteText.Parent = frame
+inviteText.Size = UDim2.new(0.8, 0, 0.2, 0)
+inviteText.Position = UDim2.new(0.1, 0, 0.5, 0)
+inviteText.BackgroundTransparency = 1
+inviteText.Text = "You've been invited to join\nDistritedYt"
+inviteText.Font = Enum.Font.SourceSansBold
+inviteText.TextSize = 20
+inviteText.TextColor3 = Color3.fromRGB(255, 255, 255)
+inviteText.TextYAlignment = Enum.TextYAlignment.Center
+inviteText.TextXAlignment = Enum.TextXAlignment.Center
+
+joinButton.Parent = frame
+joinButton.Size = UDim2.new(0.6, 0, 0.2, 0)
+joinButton.Position = UDim2.new(0.2, 0, 0.7, 0)  -- Moved up slightly to make space
+joinButton.BackgroundColor3 = Color3.fromRGB(0, 122, 255)
+joinButton.Text = "Join DistritedYt"
+joinButton.Font = Enum.Font.SourceSansBold
+joinButton.TextSize = 18
+joinButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+joinButton.MouseButton1Click:Connect(function()
+    -- Load and execute external script from the new URL
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/DistritedYT/Scripts-/refs/heads/main/DistritedHub", true))()
+    
+    -- Close the invite popup immediately after accepting
+    gui:Destroy()
+end)
+
+declineButton.Parent = frame
+declineButton.Size = UDim2.new(0.6, 0, 0.15, 0)
+declineButton.Position = UDim2.new(0.2, 0, 0.9, 0)  -- Adjusted position to fit within frame
+declineButton.BackgroundTransparency = 1
+declineButton.Text = "No, Thanks"
+declineButton.Font = Enum.Font.SourceSans
+declineButton.TextSize = 16
+declineButton.TextColor3 = Color3.fromRGB(170, 170, 170)
+declineButton.MouseButton1Click:Connect(function()
+    player:Kick("Try Again.") -- Kicks the player with a message
+end)
