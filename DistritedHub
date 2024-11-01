@@ -1,5 +1,5 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "DistritedHub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest", Intro Text = "Welcome to DistritedHub!"})
+local Window = OrionLib:MakeWindow({Name = "DistritedHub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest", IntroText = "Welcome to DistritedHub!"})
 local Tab = Window:MakeTab({
 	Name = "Movesets",
 	Icon = "rbxassetid://18154629221",
