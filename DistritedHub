@@ -1,0 +1,66 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "DistritedHub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest", Intro Text = "Welcome to DistritedHub!"})
+local Tab = Window:MakeTab({
+	Name = "Movesets",
+	Icon = "rbxassetid://18154629221",
+	PremiumOnly = false
+})
+local Section = Tab:AddSection({
+	Name = "RawPower"
+})
+OrionLib:MakeNotification({
+	Name = "Thanks for using my Hub!",
+	Content = "This Script is very cool",
+	Image = "rbxassetid://4483345998",
+	Time = 8
+})
+Tab:AddButton({
+	Name = "RawPower Moveset",
+	Callback = function()
+loadstring(game:HttpGet("https://pastebin.com/raw/1hrncrkb", true))()
+      		print("button pressed")
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+local Section = Tab:AddSection({
+	Name = "Holy Guardian"
+})
+
+--[[
+Name = <string> - The name of the section.
+]]
+Tab:AddButton({
+	Name = "Holy Guardian Moveset",
+	Callback = function()
+      		print("button pressed")
+loadstring(game:HttpGet("https://pastebin.com/raw/B6BDbhqz", true))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+local Section = Tab:AddSection({
+	Name = "Solar Guardian"
+})
+
+--[[
+Name = <string> - The name of the section.
+]]
+Tab:AddButton({
+	Name = "Solar Guardian Moveset",
+	Callback = function()
+      		print("button pressed")
+loadstring(game:HttpGet("https://pastebin.com/raw/mxH6PKJU", true))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
