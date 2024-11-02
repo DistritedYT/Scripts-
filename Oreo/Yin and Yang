@@ -1349,3 +1349,96 @@ end)
 
 -- Add the tool to the player's backpack
 runTool.Parent = player:WaitForChild("Backpack")
+local animationId = 18435383478 -- Animation ID for Ultimate/Awakening
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+
+-- Give the details of where the speedlines are
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local resourcesFolder = replicatedStorage:WaitForChild("Resources")
+local kjfolder = resourcesFolder:WaitForChild("KJEffects")
+local speedlines = kjfolder:WaitForChild("speedlines")
+
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+
+-- Determine if the character is R15 or R6
+local torso = character:FindFirstChild("HumanoidRootPart")
+
+local function enableParticles(part)
+    for _, descendant in ipairs(part:GetDescendants()) do
+        if descendant:IsA("ParticleEmitter") then
+            descendant.Enabled = true
+        elseif descendant:IsA("Attachment") then
+            for _, attachmentDescendant in ipairs(descendant:GetDescendants()) do
+                if attachmentDescendant:IsA("ParticleEmitter") then
+                    attachmentDescendant.Enabled = true
+                end
+            end
+        end
+    end
+end
+
+
+local function followPlayer(part)
+    local runService = game:GetService("RunService")
+    
+    runService.RenderStepped:Connect(function()
+        -- Offset the CFrame to position the part below the player's torso
+        part.CFrame = torso.CFrame * CFrame.new(0, -3, 60)
+    end)
+end
+
+
+local function main()
+    local duplicate = speedlines:Clone()
+    duplicate.Parent = game.Workspace
+    
+    enableParticles(duplicate)
+    followPlayer(duplicate)
+end
+
+
+main()
+
+-- Give the details of where the speedlines are, once again
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local resourcesFolder = replicatedStorage:WaitForChild("Resources")
+local kjfolder = resourcesFolder:WaitForChild("KJEffects")
+local speedlines = kjfolder:WaitForChild("speedlines")
+
+
+local function setParticleRate(part, rate)
+    for _, descendant in ipairs(part:GetDescendants()) do
+        if descendant:IsA("ParticleEmitter") and not descendant:IsDescendantOf(part:FindFirstChildWhichIsA("Attachment")) then
+            descendant.Rate = rate
+        end
+    end
+end
+
+-- Make the VFX disappear after 5 seconds
+task.wait(4.3)
+
+-- Get the part named 'speedlines'
+local part = workspace:FindFirstChild("speedlines")
+
+
+-- Check if the part exists
+if part then
+    part:Destroy()  -- Destroy the part
+    print("Deleted speedlines successfully")
+else
+    warn("Part 'speedlines' not found")
+end
+
+    end
+end
+
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
