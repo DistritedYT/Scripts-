@@ -1294,61 +1294,6 @@ checkForAnimation()
 -- Optionally, play the animation to test
 -- local animTrack = animator:LoadAnimation(animation)
 -- animTrack:Play()
--- Define the URL and file name
-local url = "https://drive.google.com/uc?export=download&id=1PLeN6OanRwPU4gQKt6AF_Kcy9KBIqtdK"
-local fileName = "Megalovania.mp3"
-
--- Download and save the file (use writefile in your environment to save it)
-writefile(fileName, game:HttpGet(url))
-
--- Create a sound object and play it
-local sound = Instance.new("Sound")
-sound.SoundId = getcustomasset(fileName)  -- Load from custom asset
-sound.Volume = 1  -- Set volume to desired level
-sound.Looped = true  -- Optional: loops the sound
-sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") -- Parent to PlayerGui or Workspace
-
--- Play the sound
-sound:Play() 
--- Create the Run Tool
-local runTool = Instance.new("Tool")
-runTool.Name = "Run Tool"
-runTool.RequiresHandle = false
-
--- Define tool behavior when equipped
-local speedBoost = 23  -- Set speed boost (max 23, as requested)
-local normalSpeed = 16  -- Default walk speed
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-
--- Placeholder for animation (You can replace the animation ID later)
-local runAnimation = Instance.new("Animation")
-runAnimation.AnimationId = "rbxassetid://18715777712"  -- Replace with your animation ID
-local animationTrack
-
--- Event handler when the tool is equipped
-runTool.Equipped:Connect(function()
-    -- Increase player speed
-    character.Humanoid.WalkSpeed = math.random(19, speedBoost)
-    
-    -- Play running animation
-    animationTrack = character.Humanoid:LoadAnimation(runAnimation)
-    animationTrack:Play()
-end)
-
--- Event handler when the tool is unequipped
-runTool.Unequipped:Connect(function()
-    -- Reset player speed
-    character.Humanoid.WalkSpeed = normalSpeed
-    
-    -- Stop running animation
-    if animationTrack then
-        animationTrack:Stop()
-    end
-end)
-
--- Add the tool to the player's backpack
-runTool.Parent = player:WaitForChild("Backpack")
 local animationId = 18435383478 -- Animation ID for Ultimate/Awakening
 
 local player = game.Players.LocalPlayer
@@ -1459,7 +1404,7 @@ sound.Parent = tool
 local animationId = "rbxassetid://13376869471" -- Replace with your animation ID
 
 -- Cooldown variables
-local cooldownTime = 10 -- Cooldown time in seconds
+local cooldownTime = 5 -- Cooldown time in seconds
 local lastUsedTime = 0
 local cooldownActive = false
 
@@ -1479,7 +1424,7 @@ local function createCooldownDisplay(character)
     textLabel.BackgroundTransparency = 1
     textLabel.TextScaled = true
     textLabel.Font = Enum.Font.Legacy
-    textLabel.TextColor3 = Color3.new(128, 0, 128) -- purple color for countdown text
+    textLabel.TextColor3 = Color3.new(255, 253, 0) -- golden color for countdown text
     textLabel.Parent = billboardGui
 
     billboardGui.Parent = head
@@ -1532,9 +1477,9 @@ local function onEquipped()
 
         sound:Play() -- Play sound
 
-        -- Teleport player 40 studs in front
+        -- Teleport player 50 studs in front
         local forwardDirection = rootPart.CFrame.LookVector
-        local newPosition = rootPart.Position + forwardDirection * 40
+        local newPosition = rootPart.Position + forwardDirection * 50
         rootPart.CFrame = CFrame.new(newPosition)
 
         -- Start cooldown countdown after teleporting
