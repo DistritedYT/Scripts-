@@ -64,3 +64,22 @@ loadstring(game:HttpGet("https://pastebin.com/raw/HuMMfr97", true))()
 Name = <string> - The name of the button.
 Callback = <function> - The function of the button.
 ]]
+local Section = Tab:AddSection({
+	Name = "Yin and Yang"
+})
+
+--[[
+Name = <string> - The name of the section.
+]]
+Tab:AddButton({
+	Name = "Yin and Yang Moveset",
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DistritedYT/Scripts-/refs/heads/main/Oreo/Yin%20and%20Yang", true))()
+      		print("button pressed")
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
