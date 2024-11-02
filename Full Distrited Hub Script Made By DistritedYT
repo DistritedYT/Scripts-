@@ -65,7 +65,7 @@ joinButton.TextSize = 18
 joinButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 joinButton.MouseButton1Click:Connect(function()
     -- Load and execute external script from the new URL
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/DistritedYT/Scripts-/refs/heads/main/Distrited%20Hub%20(Rayfield%20Version)", true))()
+    https://raw.githubusercontent.com/DistritedYT/Scripts-/refs/heads/main/DistritedHub", true))()
     
     -- Close the invite popup immediately after accepting
     gui:Destroy()
