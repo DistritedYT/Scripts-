@@ -1,11 +1,22 @@
-local Tool = script.Parent
+-- Define the tool's name
+local ToolName = "Boogie Woogie"
+
+-- Create the Tool
+local tool = Instance.new("Tool")
+tool.Name = ToolName
+tool.RequiresHandle = false  -- Tool does not require a handle
+tool.CanBeDropped = false    -- Prevents the tool from being dropped
+
+-- Parent the tool to the player's backpack so it's accessible
+tool.Parent = game.Players.LocalPlayer.Backpack
+
 local Players = game:GetService("Players")
 
 -- Configure the animation ID for Boogie Woogie effect
 local animationId = "rbxassetid://18715714749"  -- Replace with your actual animation ID
 
-Tool.Activated:Connect(function()
-    local player = Players:GetPlayerFromCharacter(Tool.Parent)
+tool.Activated:Connect(function()
+    local player = Players:GetPlayerFromCharacter(tool.Parent)
     local mouse = player:GetMouse()
 
     -- Detect the target player by clicking on them
