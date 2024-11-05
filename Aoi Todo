@@ -1,66 +1,106 @@
--- Define the tool's name
-local ToolName = "Boogie Woogie"
-
--- Create the Tool
 local tool = Instance.new("Tool")
-tool.Name = ToolName
-tool.RequiresHandle = false  -- Tool does not require a handle
-tool.CanBeDropped = false    -- Prevents the tool from being dropped
+tool.Name = "Boogie Woogie" -- Initial tool name
 
--- Parent the tool to the player's backpack so it's accessible
-tool.Parent = game.Players.LocalPlayer.Backpack
+local handle = Instance.new("Part")
+handle.Name = "Handle"
+handle.Transparency = 1
+handle.CanCollide = false
+handle.Parent = tool
 
-local Players = game:GetService("Players")
+local soundId = "rbxassetid://18461671633" -- Replace with your sound ID
+local sound = Instance.new("Sound")
+sound.SoundId = soundId
+sound.Parent = tool
 
--- Configure the animation ID for Boogie Woogie effect
-local animationId = "rbxassetid://18715714749"  -- Replace with your actual animation ID
+local animationId = "rbxassetid://18715714749" -- Replace with your animation ID
 
-tool.Activated:Connect(function()
-    local player = Players:GetPlayerFromCharacter(tool.Parent)
-    local mouse = player:GetMouse()
+-- Cooldown variables
+local cooldownTime = 7 -- Cooldown time in seconds
+local lastUsedTime = 0
+local cooldownActive = false
 
-    -- Detect the target player by clicking on them
-    local target = mouse.Target
-    if target and target.Parent:FindFirstChild("Humanoid") then
-        local targetPlayer = Players:GetPlayerFromCharacter(target.Parent)
-        
-        if targetPlayer and targetPlayer ~= player then
-            -- Get player and target character positions
-            local playerChar = player.Character
-            local targetChar = targetPlayer.Character
+-- Function to create and show the countdown timer above the player's head
+local function createCooldownDisplay(character)
+    local head = character:FindFirstChild("Head")
+    if not head then return end
 
-            if playerChar and targetChar and playerChar:FindFirstChild("HumanoidRootPart") and targetChar:FindFirstChild("HumanoidRootPart") then
-                local playerRoot = playerChar.HumanoidRootPart
-                local targetRoot = targetChar.HumanoidRootPart
-                
-                -- Swap positions
-                local playerPosition = playerRoot.CFrame
-                local targetPosition = targetRoot.CFrame
-                playerRoot.CFrame = targetPosition
-                targetRoot.CFrame = playerPosition
-                
-                -- Play animation for both players
-                local playerAnim = Instance.new("Animation")
-                playerAnim.AnimationId = animationId
-                local playerHumanoid = playerChar:FindFirstChildOfClass("Humanoid")
-                
-                local targetAnim = Instance.new("Animation")
-                targetAnim.AnimationId = animationId
-                local targetHumanoid = targetChar:FindFirstChildOfClass("Humanoid")
-                
-                if playerHumanoid then
-                    local playerAnimTrack = playerHumanoid:LoadAnimation(playerAnim)
-                    playerAnimTrack:Play()
-                end
-                
-                if targetHumanoid then
-                    local targetAnimTrack = targetHumanoid:LoadAnimation(targetAnim)
-                    targetAnimTrack:Play()
-                end
-            end
+    local billboardGui = Instance.new("BillboardGui")
+    billboardGui.Name = "CooldownDisplay"
+    billboardGui.Size = UDim2.new(3, 0, 1, 0)
+    billboardGui.StudsOffset = Vector3.new(0, 2, 0)
+    billboardGui.AlwaysOnTop = true
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextScaled = true
+    textLabel.Font = Enum.Font.Legacy
+    textLabel.TextColor3 = Color3.new(135, 206, 235) -- sky blue color for countdown text
+    textLabel.Parent = billboardGui
+
+    billboardGui.Parent = head
+    return textLabel
+end
+
+local function startCooldownCountdown(character)
+    cooldownActive = true
+    local textLabel = createCooldownDisplay(character) -- Display countdown above head
+
+    for i = cooldownTime, 1, -1 do
+        tool.Name = "Cooldown: " .. i .. "s" -- Update tool name in toolbar
+        if textLabel then
+            textLabel.Text = "Cooldown: " .. i .. "s" -- Update text above player's head
         end
+        wait(1)
     end
-end)
+
+    cooldownActive = false
+    tool.Name = "Boogie Woogie" -- Reset tool name
+    if textLabel then
+        textLabel.Parent:Destroy() -- Remove countdown display above head
+    end
+    print("Tool is ready to use again.")
+end
+
+local function onEquipped()
+    local currentTime = tick()
+    if cooldownActive or (currentTime - lastUsedTime < cooldownTime) then
+        print("Tool is on cooldown.")
+        return
+    end
+
+    lastUsedTime = currentTime
+
+    -- Teleport player and start cooldown countdown
+    local character = game.Players.LocalPlayer.Character
+    if character then
+        local humanoid = character:WaitForChild("Humanoid")
+        local rootPart = character:WaitForChild("HumanoidRootPart")
+
+        rootPart.Anchored = false -- Set to false to allow movement
+
+        -- Play teleport animation
+        local animation = Instance.new("Animation")
+        animation.AnimationId = animationId
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play()
+        animationTrack:AdjustSpeed(1)
+
+        sound:Play() -- Play sound
+
+        -- Teleport player 11 studs in front
+        local forwardDirection = rootPart.CFrame.LookVector
+        local newPosition = rootPart.Position + forwardDirection * 50
+        rootPart.CFrame = CFrame.new(newPosition)
+
+        -- Start cooldown countdown after teleporting
+        spawn(function() startCooldownCountdown(character) end)
+    end
+end
+
+tool.Equipped:Connect(onEquipped)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
 -- Services
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
