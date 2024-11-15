@@ -33,7 +33,7 @@ local UltMovesetAnim4 = 13927612951
 
 -- the jump one means when he jumps while in sky
 local UltMovesetAnim4Jump = 13891242085
-loxal UltMovesetAnim4Land = 13929182266
+local UltMovesetAnim4Land = 13929182266
 
 -- don't change here unless you know
 local function handleAnimationDetection(animIdsToStop, replacementAnimId)
