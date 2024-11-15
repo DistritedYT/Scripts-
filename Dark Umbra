@@ -1,25 +1,3 @@
-function Callback(answer)
-    if answer == "Okay" then 
-        script_here
-    end
-end
-
-local Bindable = Instance.new("BindableFunction")
-Bindable.OnInvoke = Callback
-
-game.StarterGui:SetCore("SendNotification", {
-Title = "Notice";
-Text = "This might have bugs, enjoy!";
-Duration = 5;
-Icon = "rbxassetid://18154629221"; -- leave it like that if you don't want the icon
-Button1 = "Okay"; -- name of it
-Callback = Bindable
-})
--- remove this script at bottom if you don't wan tsb notification sound
-s= Instance.new("Sound")
-s.SoundId = "rbxassetid://3398620867"
-s:Play()
-s.Volume = 1
 -- if you don't wanna change it keep it like that all of them
 local m1 = 18716133404
 local m2 = 18716143973
