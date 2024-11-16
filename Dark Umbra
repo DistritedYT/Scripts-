@@ -1,3 +1,4 @@
+-- Skibidi
 local Animation = 13497875049
 local StartTime = 0 -- what duration it starts like video
 local Speed = 1 -- animation speed
