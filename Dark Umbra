@@ -12,6 +12,177 @@ p:AdjustSpeed(1)
 delay(Duration, function() -- delete these 3 lines if you don't want to stop it or you can adjust 7 to less or longer to stop animation 
 p:Stop()
 end)
+local OriginalAnimation = 18435383478
+local function Script()
+   local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Create the Billboard GUI
+local billboardGui = Instance.new("BillboardGui")
+billboardGui.Parent = character:WaitForChild("Head")
+billboardGui.Size = UDim2.new(6, 0, 2, 0) -- Bigger size for bold, large text
+billboardGui.StudsOffset = Vector3.new(0, 3, 0)
+billboardGui.AlwaysOnTop = true
+
+-- Add the text label
+local textLabel = Instance.new("TextLabel")
+textLabel.Parent = billboardGui
+textLabel.Size = UDim2.new(1, 0, 1, 0)
+textLabel.BackgroundTransparency = 1
+textLabel.Text = ""
+textLabel.TextScaled = true
+textLabel.Font = Enum.Font.GothamBlack -- Bold and large font
+textLabel.TextStrokeTransparency = 0 -- Add an outline
+textLabel.TextStrokeColor3 = Color3.new(0, 0, 0) -- Black outline for contrast
+
+-- Add UIGradient for color blending
+local gradient = Instance.new("UIGradient")
+gradient.Parent = textLabel
+gradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.new(1, 0, 0)),  -- Red
+    ColorSequenceKeypoint.new(0.5, Color3.new(0, 0, 0)), -- Black
+    ColorSequenceKeypoint.new(1, Color3.new(0, 0, 1))   -- Blue
+})
+
+-- Typewriting effect variables
+local textContent = "I embraced the darkness, and now it's your turn."
+local animationSpeed = 0.05 -- Speed of the typewriter animation
+local displayTime = 4 -- How long the text stays visible
+local fadeSpeed = 0.1 -- Speed of the fade-out effect
+
+-- Typewriting function
+local function typewrite()
+    for i = 1, #textContent do
+        textLabel.Text = string.sub(textContent, 1, i)
+        task.wait(animationSpeed)
+    end
+end
+
+-- Fade-out function
+local function fadeOut()
+    for transparency = 0, 1, fadeSpeed do
+        textLabel.TextTransparency = transparency
+        textLabel.TextStrokeTransparency = transparency
+        task.wait(0.05)
+    end
+    billboardGui:Destroy() -- Clean up the GUI after fading
+end
+
+-- Start the typewriting animation
+typewrite()
+task.wait(displayTime)
+fadeOut()
+end
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. OriginalAnimation then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+Script()
+    end
+end
+
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local animationId = 12447707844 -- Animation ID for Ultimate/Awakening
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+
+-- Give the details of where the speedlines are
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local resourcesFolder = replicatedStorage:WaitForChild("Resources")
+local kjfolder = resourcesFolder:WaitForChild("KJEffects")
+local speedlines = kjfolder:WaitForChild("speedlines")
+
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+
+-- Determine if the character is R15 or R6
+local torso = character:FindFirstChild("HumanoidRootPart")
+
+local function enableParticles(part)
+    for _, descendant in ipairs(part:GetDescendants()) do
+        if descendant:IsA("ParticleEmitter") then
+            descendant.Enabled = true
+        elseif descendant:IsA("Attachment") then
+            for _, attachmentDescendant in ipairs(descendant:GetDescendants()) do
+                if attachmentDescendant:IsA("ParticleEmitter") then
+                    attachmentDescendant.Enabled = true
+                end
+            end
+        end
+    end
+end
+
+
+local function followPlayer(part)
+    local runService = game:GetService("RunService")
+    
+    runService.RenderStepped:Connect(function()
+        -- Offset the CFrame to position the part below the player's torso
+        part.CFrame = torso.CFrame * CFrame.new(0, -3, 60)
+    end)
+end
+
+
+local function main()
+    local duplicate = speedlines:Clone()
+    duplicate.Parent = game.Workspace
+    
+    enableParticles(duplicate)
+    followPlayer(duplicate)
+end
+
+
+main()
+
+-- Give the details of where the speedlines are, once again
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local resourcesFolder = replicatedStorage:WaitForChild("Resources")
+local kjfolder = resourcesFolder:WaitForChild("KJEffects")
+local speedlines = kjfolder:WaitForChild("speedlines")
+
+
+local function setParticleRate(part, rate)
+    for _, descendant in ipairs(part:GetDescendants()) do
+        if descendant:IsA("ParticleEmitter") and not descendant:IsDescendantOf(part:FindFirstChildWhichIsA("Attachment")) then
+            descendant.Rate = rate
+        end
+    end
+end
+
+-- Make the VFX disappear after 5 seconds
+task.wait(4.3)
+
+-- Get the part named 'speedlines'
+local part = workspace:FindFirstChild("speedlines")
+
+
+-- Check if the part exists
+if part then
+    part:Destroy()  -- Destroy the part
+    print("Deleted speedlines successfully")
+else
+    warn("Part 'speedlines' not found")
+end
+
+    end
+end
+
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 -- Services
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -1179,174 +1350,3 @@ t.Parent = game.Players.LocalPlayer.Backpack
 t.Activated:Connect(function() -- instead of Activated you can do Equipped or Unequipped
 Script()
 end)
-local animationId = 18435383478 -- Animation ID for Ultimate/Awakening
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-
-local function onAnimationPlayed(animationTrack)
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
-
--- Give the details of where the speedlines are
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local resourcesFolder = replicatedStorage:WaitForChild("Resources")
-local kjfolder = resourcesFolder:WaitForChild("KJEffects")
-local speedlines = kjfolder:WaitForChild("speedlines")
-
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-
-
--- Determine if the character is R15 or R6
-local torso = character:FindFirstChild("HumanoidRootPart")
-
-local function enableParticles(part)
-    for _, descendant in ipairs(part:GetDescendants()) do
-        if descendant:IsA("ParticleEmitter") then
-            descendant.Enabled = true
-        elseif descendant:IsA("Attachment") then
-            for _, attachmentDescendant in ipairs(descendant:GetDescendants()) do
-                if attachmentDescendant:IsA("ParticleEmitter") then
-                    attachmentDescendant.Enabled = true
-                end
-            end
-        end
-    end
-end
-
-
-local function followPlayer(part)
-    local runService = game:GetService("RunService")
-    
-    runService.RenderStepped:Connect(function()
-        -- Offset the CFrame to position the part below the player's torso
-        part.CFrame = torso.CFrame * CFrame.new(0, -3, 60)
-    end)
-end
-
-
-local function main()
-    local duplicate = speedlines:Clone()
-    duplicate.Parent = game.Workspace
-    
-    enableParticles(duplicate)
-    followPlayer(duplicate)
-end
-
-
-main()
-
--- Give the details of where the speedlines are, once again
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local resourcesFolder = replicatedStorage:WaitForChild("Resources")
-local kjfolder = resourcesFolder:WaitForChild("KJEffects")
-local speedlines = kjfolder:WaitForChild("speedlines")
-
-
-local function setParticleRate(part, rate)
-    for _, descendant in ipairs(part:GetDescendants()) do
-        if descendant:IsA("ParticleEmitter") and not descendant:IsDescendantOf(part:FindFirstChildWhichIsA("Attachment")) then
-            descendant.Rate = rate
-        end
-    end
-end
-
--- Make the VFX disappear after 5 seconds
-task.wait(4.3)
-
--- Get the part named 'speedlines'
-local part = workspace:FindFirstChild("speedlines")
-
-
--- Check if the part exists
-if part then
-    part:Destroy()  -- Destroy the part
-    print("Deleted speedlines successfully")
-else
-    warn("Part 'speedlines' not found")
-end
-
-    end
-end
-
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
-local OriginalAnimation = 18435383478
-local function Script()
-   local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-
--- Create the Billboard GUI
-local billboardGui = Instance.new("BillboardGui")
-billboardGui.Parent = character:WaitForChild("Head")
-billboardGui.Size = UDim2.new(6, 0, 2, 0) -- Bigger size for bold, large text
-billboardGui.StudsOffset = Vector3.new(0, 3, 0)
-billboardGui.AlwaysOnTop = true
-
--- Add the text label
-local textLabel = Instance.new("TextLabel")
-textLabel.Parent = billboardGui
-textLabel.Size = UDim2.new(1, 0, 1, 0)
-textLabel.BackgroundTransparency = 1
-textLabel.Text = ""
-textLabel.TextScaled = true
-textLabel.Font = Enum.Font.GothamBlack -- Bold and large font
-textLabel.TextStrokeTransparency = 0 -- Add an outline
-textLabel.TextStrokeColor3 = Color3.new(0, 0, 0) -- Black outline for contrast
-
--- Add UIGradient for color blending
-local gradient = Instance.new("UIGradient")
-gradient.Parent = textLabel
-gradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.new(1, 0, 0)),  -- Red
-    ColorSequenceKeypoint.new(0.5, Color3.new(0, 0, 0)), -- Black
-    ColorSequenceKeypoint.new(1, Color3.new(0, 0, 1))   -- Blue
-})
-
--- Typewriting effect variables
-local textContent = "I embraced the darkness, and now it's your turn."
-local animationSpeed = 0.05 -- Speed of the typewriter animation
-local displayTime = 4 -- How long the text stays visible
-local fadeSpeed = 0.1 -- Speed of the fade-out effect
-
--- Typewriting function
-local function typewrite()
-    for i = 1, #textContent do
-        textLabel.Text = string.sub(textContent, 1, i)
-        task.wait(animationSpeed)
-    end
-end
-
--- Fade-out function
-local function fadeOut()
-    for transparency = 0, 1, fadeSpeed do
-        textLabel.TextTransparency = transparency
-        textLabel.TextStrokeTransparency = transparency
-        task.wait(0.05)
-    end
-    billboardGui:Destroy() -- Clean up the GUI after fading
-end
-
--- Start the typewriting animation
-typewrite()
-task.wait(displayTime)
-fadeOut()
-end
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-local function onAnimationPlayed(animationTrack)
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. OriginalAnimation then
-local p = game.Players.LocalPlayer
-local Humanoid = p.Character:WaitForChild("Humanoid")
-for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
-    animTrack:Stop()
-end
-Script()
-    end
-end
-
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
