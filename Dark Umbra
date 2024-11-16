@@ -12,7 +12,7 @@ p:AdjustSpeed(1)
 delay(Duration, function() -- delete these 3 lines if you don't want to stop it or you can adjust 7 to less or longer to stop animation 
 p:Stop()
 end)
-local OriginalAnimation = 15391323441
+local OriginalAnimation = 13501296372
 local function Script()
    local Players = game:GetService("Players")
 local player = Players.LocalPlayer
