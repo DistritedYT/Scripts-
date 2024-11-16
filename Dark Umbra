@@ -12,7 +12,7 @@ p:AdjustSpeed(1)
 delay(Duration, function() -- delete these 3 lines if you don't want to stop it or you can adjust 7 to less or longer to stop animation 
 p:Stop()
 end)
-local OriginalAnimation = 18435383478
+local OriginalAnimation = 15391323441
 local function Script()
    local Players = game:GetService("Players")
 local player = Players.LocalPlayer
@@ -90,7 +90,7 @@ Script()
 end
 
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
-local animationId = 12447707844 -- Animation ID for Ultimate/Awakening
+local animationId = 13501296372 -- Animation ID for Ultimate/Awakening
 
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -828,7 +828,7 @@ end
 
 local AnimAnim = Instance.new("Animation")
 
-AnimAnim.AnimationId = "rbxassetid://18435383478" -- the specific anim
+AnimAnim.AnimationId = "rbxassetid://13501296372" -- the specific anim
 
 local Anim = Humanoid:LoadAnimation(AnimAnim)
 
