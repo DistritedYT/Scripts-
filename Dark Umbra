@@ -256,7 +256,7 @@ local baseButton = hotbarFrame:FindFirstChild("1").Base
 local ToolName = baseButton.ToolName
 
 
-ToolName.Text = "Shadow Strike" -- put the name of the base move 1
+ToolName.Text = "Umbra Punch" -- put the name of the base move 1
 
 
 local player = game.Players.LocalPlayer
@@ -274,7 +274,7 @@ local baseButton = hotbarFrame:FindFirstChild("2").Base
 local ToolName = baseButton.ToolName
 
 
-ToolName.Text = "Umbra Barrage" -- put the name of the base move 2
+ToolName.Text = "Shadow Strikes" -- put the name of the base move 2
 
 
 local player = game.Players.LocalPlayer
@@ -292,7 +292,7 @@ local baseButton = hotbarFrame:FindFirstChild("3").Base
 local ToolName = baseButton.ToolName
 
 
-ToolName.Text = "Forceful Push" -- put the name of the base move 3
+ToolName.Text = "Imbued Uppercut" -- put the name of the base move 3
 
 
 local player = game.Players.LocalPlayer
@@ -493,12 +493,12 @@ end
 
 local AnimAnim = Instance.new("Animation")
 
-AnimAnim.AnimationId = "rbxassetid://13499771836" -- the specific anim
+AnimAnim.AnimationId = "rbxassetid://14900168720" -- the specific anim
 
 local Anim = Humanoid:LoadAnimation(AnimAnim)
 
 
-local startTime = 0.2 -- speed for specific anim
+local startTime = 1.3 -- speed for specific anim
 
 
 Anim:Play()
@@ -507,7 +507,31 @@ Anim:AdjustSpeed(0)
 
 Anim.TimePosition = startTime
 
-Anim:AdjustSpeed(1)
+Anim:AdjustSpeed(0.7)
+local final1 = game.ReplicatedStorage.Resources.TerribleTornado["HandCharge"].Part.Attachment:Clone()
+final1.Parent = game.Players.LocalPlayer.Character["Right Arm"]
+
+for _, child in ipairs(final1:GetChildren()) do
+    if child:IsA("ParticleEmitter") then -- Check if the child is a ParticleEmitter
+        child:Emit(500) -- Emit 500 particles
+    end
+end
+
+local final4 = game.ReplicatedStorage.Resources.TerribleTornado["HandCharge"].Part.Attachment:Clone()
+final4.Parent = game.Players.LocalPlayer.Character["Right Arm"]
+
+for _, child in ipairs(final4:GetChildren()) do
+    if child:IsA("ParticleEmitter") then -- Check if the child is a ParticleEmitter
+        child:Emit(500) -- Emit 500 particles
+    end
+end
+
+-- Wait for 0.8 seconds before destroying the VFX
+wait(0.8)
+
+-- Destroy the VFX after 0.8 seconds
+final1:Destroy()
+final4:Destroy()
 
 
 delay(1.8, function()
@@ -1251,7 +1275,7 @@ local function detectAndRenameTool()
     local tool = player.Backpack:FindFirstChild("Serious Punch") or player.Character:FindFirstChild("Table Flip")
 
     if tool then
-        tool.Name = "Umbral Punch" -- Change the ult name
+        tool.Name = "Fatality" -- Change the ult name
     end
 end
 
