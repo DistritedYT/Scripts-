@@ -665,6 +665,8 @@ final1.Parent = game.Players.LocalPlayer.Character["Right Arm"]
 for _, child in ipairs(final1:GetChildren()) do
     if child:IsA("ParticleEmitter") then -- Check if the child is a ParticleEmitter
         child:Emit(500) -- Emit 500 particles
+        -- Change the color of the particles to purple
+        child.Color = ColorSequence.new(Color3.fromRGB(128, 0, 128)) -- Purple color
     end
 end
 
@@ -674,6 +676,8 @@ final4.Parent = game.Players.LocalPlayer.Character["Right Arm"]
 for _, child in ipairs(final4:GetChildren()) do
     if child:IsA("ParticleEmitter") then -- Check if the child is a ParticleEmitter
         child:Emit(500) -- Emit 500 particles
+        -- Change the color of the particles to purple
+        child.Color = ColorSequence.new(Color3.fromRGB(128, 0, 128)) -- Purple color
     end
 end
 
@@ -684,11 +688,8 @@ wait(0.8)
 final1:Destroy()
 final4:Destroy()
 
-
 delay(1.8, function()
-
     Anim:Stop()
-
 end)
 
 
