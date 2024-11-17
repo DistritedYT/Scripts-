@@ -13,6 +13,121 @@ p:AdjustSpeed(1)
 delay(Duration, function() -- delete these 3 lines if you don't want to stop it or you can adjust 7 to less or longer to stop animation 
 p:Stop()
 end)
+-- Variables
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+local url = "https://drive.google.com/uc?export=download&id=1PLeN6OanRwPU4gQKt6AF_Kcy9KBIqtdK"
+local fileName = "Megalovania.mp3"  -- Updated file name
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui", playerGui)
+screenGui.Name = "MusicLoaderGui"
+
+-- Create Frame for the Black Box
+local blackBox = Instance.new("Frame", screenGui)
+blackBox.Size = UDim2.new(1, 0, 0, 50)
+blackBox.Position = UDim2.new(0, 0, 0, 0)
+blackBox.BackgroundColor3 = Color3.new(0, 0, 0)
+blackBox.BorderSizePixel = 0
+
+-- Create TextLabel for the Loading Text
+local loadingText = Instance.new("TextLabel", blackBox)
+loadingText.Size = UDim2.new(1, 0, 1, 0)
+loadingText.Position = UDim2.new(0, 0, 0, 0)
+loadingText.BackgroundTransparency = 1
+loadingText.Text = ""
+loadingText.TextColor3 = Color3.new(1, 0, 0)
+loadingText.Font = Enum.Font.SourceSansBold
+loadingText.TextSize = 24
+
+-- Typewriting Effect
+local function typewrite(text, label)
+    for i = 1, #text do
+        label.Text = string.sub(text, 1, i)
+        wait(0.05)
+    end
+end
+
+-- Fading Out Animation
+local function fadeOut(guiElement)
+    for i = 1, 10 do
+        guiElement.BackgroundTransparency = guiElement.BackgroundTransparency + 0.1
+        if guiElement:IsA("TextLabel") then
+            guiElement.TextTransparency = guiElement.TextTransparency + 0.1
+        end
+        wait(0.1)
+    end
+    guiElement:Destroy()
+end
+
+-- Download the Audio
+local function downloadAndPlayMusic()
+    -- Download the file
+    writefile(fileName, game:HttpGet(url))
+
+    -- Create a sound object
+    local sound = Instance.new("Sound")
+    sound.SoundId = getcustomasset(fileName)  -- Load from custom asset
+    sound.Volume = 1  -- Set volume to desired level
+    sound.Looped = true  -- Optional: loops the sound
+    sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")  -- Parent to PlayerGui or Workspace
+
+    -- Play the sound
+    sound:Play()
+end
+
+-- Main Functionality
+local function playMusic()
+    -- Typewriting Animation
+    typewrite("Loading Music...", loadingText)
+
+    -- Wait 5 seconds
+    wait(5)
+
+    -- Fade out animations
+    fadeOut(loadingText)
+    fadeOut(blackBox)
+
+    -- Download and play music
+    downloadAndPlayMusic()
+end
+
+-- Execute the Script
+playMusic()
+local success, err = pcall(function()
+    -- Create the ScreenGui
+    local StarterGui = game:GetService("StarterGui")
+    local PlayerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui") -- Use PlayerGui for LocalScripts
+    local ScreenGui = Instance.new("ScreenGui")
+    local Watermark = Instance.new("TextLabel")
+
+    -- Set ScreenGui properties
+    ScreenGui.Parent = PlayerGui
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.Name = "WatermarkGui" -- Name for debugging
+
+    -- Set Watermark properties
+    Watermark.Parent = ScreenGui
+    Watermark.Text = "Made By DistritedYT"
+    Watermark.Font = Enum.Font.Arcade -- Minecraft-like font
+    Watermark.TextSize = 24
+    Watermark.TextColor3 = Color3.new(0.5, 0, 0) -- Dark evil red (RGB: 128, 0, 0)
+    Watermark.TextTransparency = 0.3 -- Semi-transparent
+    Watermark.BackgroundTransparency = 1 -- Fully transparent background
+    Watermark.Size = UDim2.new(0.3, 0, 0.05, 0) -- Adjust size
+    Watermark.Position = UDim2.new(0.7, 0, 0.9, 0) -- Bottom-right corner
+    Watermark.ZIndex = 10 -- Ensure it appears above other UI elements
+
+    -- Ensure visibility
+    Watermark.Visible = true
+end)
+
+-- Check if the script executed successfully
+if success then
+    print("Loaded")
+else
+    warn("ERROR: " .. tostring(err))
+end
 local OriginalAnimation = 18459215845
 local function Script()
    local Players = game:GetService("Players")
