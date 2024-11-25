@@ -1,7 +1,7 @@
 local CharacterName = "Sammer"
 local CharacterIcon = 113226056732994
 local function Script()
-    here
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/DistritedYT/Scripts-/refs/heads/main/Sammer%20V2"))()
 end
 
 
