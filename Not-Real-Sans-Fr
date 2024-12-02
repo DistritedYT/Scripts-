@@ -1,6 +1,6 @@
 --Stupid Skidders get outta here
 local CharacterName = "Sans"
-local CharacterIcon = 0
+local CharacterIcon = 93751760531060
 local function Script()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/DistritedYT/Scripts-/refs/heads/main/Sans-V1"))()
 end
