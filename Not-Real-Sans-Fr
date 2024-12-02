@@ -138,7 +138,7 @@ game.StarterGui:SetCore("SendNotification", {
 Title = "Notice";
 Text = "This was made by Serial Designation N a.k.a DistritedYT, this is me!";
 Duration = 5;
-Icon = "rbxassetid://0"; -- leave it like that if you don't want the icon
+Icon = "rbxassetid://134379644818808"; -- leave it like that if you don't want the icon
 Button1 = "OK, Cool"; -- name of it
 Button2 = "Go away"; -- remove this line if you only want 1 button
 })
