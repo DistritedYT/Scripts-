@@ -1,3 +1,99 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Helper function to interpolate color (bluer to lighter)
+local function getHealthColor(healthPercentage)
+    local r = 1 - healthPercentage
+    local g = 0.5 + (0.5 * (1 - healthPercentage))
+    local b = 1
+    return Color3.new(r, g, b)
+end
+
+-- Create a health bar
+local function createHealthBar(player)
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "CustomHealthBar"
+    billboard.Adornee = character:WaitForChild("HumanoidRootPart")
+    billboard.Size = UDim2.new(4, 0, 0.6, 0)
+    billboard.StudsOffset = Vector3.new(0, 3, 0)
+    billboard.AlwaysOnTop = true
+    billboard.Parent = character
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(1, 0, 1, 0)
+    frame.BackgroundColor3 = Color3.new(0, 0, 1) -- Default blue background
+    frame.BorderSizePixel = 0
+    frame.Parent = billboard
+
+    local healthBar = Instance.new("Frame")
+    healthBar.Size = UDim2.new(1, 0, 1, 0)
+    healthBar.BackgroundColor3 = Color3.new(0, 0.5, 1)
+    healthBar.BorderSizePixel = 0
+    healthBar.ClipsDescendants = true
+    healthBar.Parent = frame
+
+    -- Text inside the health bar
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.Text = "Sans"
+    textLabel.Font = Enum.Font.Arcade
+    textLabel.TextScaled = true
+    textLabel.Parent = healthBar
+
+    -- Crack layer
+    local cracks = Instance.new("Frame")
+    cracks.Size = UDim2.new(1, 0, 1, 0)
+    cracks.BackgroundTransparency = 1
+    cracks.ClipsDescendants = true
+    cracks.Parent = healthBar
+
+    -- Function to generate cracks
+    local function updateCracks(healthPercentage)
+        cracks:ClearAllChildren() -- Clear old cracks
+
+        local crackCount = math.floor((1 - healthPercentage) * 10) -- More cracks at lower health
+        for i = 1, crackCount do
+            local crack = Instance.new("ImageLabel")
+            crack.Size = UDim2.new(math.random(5, 20) / 100, 0, math.random(5, 20) / 100, 0)
+            crack.Position = UDim2.new(math.random(0, 100) / 100, 0, math.random(0, 100) / 100, 0)
+            crack.BackgroundTransparency = 1
+            crack.Image = "rbxassetid://73482404381846" -- Crack texture ID you provided
+            crack.ImageColor3 = Color3.new(1, 1, 1) -- White cracks
+            crack.Parent = cracks
+        end
+    end
+
+    -- Update health bar and effects dynamically
+    humanoid.HealthChanged:Connect(function()
+        local healthPercentage = humanoid.Health / humanoid.MaxHealth
+        healthBar.Size = UDim2.new(healthPercentage, 0, 1, 0)
+        healthBar.BackgroundColor3 = getHealthColor(healthPercentage)
+        updateCracks(healthPercentage)
+    end)
+
+    -- Cleanup when the character is removed
+    character.AncestryChanged:Connect(function(_, parent)
+        if not parent then
+            billboard:Destroy()
+        end
+    end)
+end
+
+-- Apply the health bar to the local player
+local localPlayer = Players.LocalPlayer
+
+localPlayer.CharacterAdded:Connect(function(character)
+    createHealthBar(localPlayer)
+end)
+
+if localPlayer.Character then
+    createHealthBar(localPlayer)
+end
 local lighting = game.Lighting
 
 -- Ducks like bread, right?
